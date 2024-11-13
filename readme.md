@@ -28,7 +28,25 @@ The system uses a custom MQTT component programmed in the Arduino IDE, enabling 
    - Configure the LED ESP32 to listen for messages on `/home/light/set`.
 
 3. **Configure Home Assistant Dashboard**:
-   - Add a gauge to display temperature data and a button to control the LED.
+   - Add the following configurations to `configuration.yaml` to integrate the temperature sensor and LED components:
+
+     ```yaml
+     mqtt:
+       sensor:
+         - name: "Bedroom Temperature"
+           state_topic: "/home/bedroom/temperature"
+          
+       light:
+         - name: "Simple MQTT Light"
+           state_topic: "home/light/state"
+           command_topic: "home/light/set"
+           payload_on: "ON"
+           payload_off: "OFF"
+           optimistic: false
+           qos: 0
+     ```
+
+   - This configuration creates an MQTT-based temperature sensor and light control in Home Assistant.
 
 ## Demo
 
