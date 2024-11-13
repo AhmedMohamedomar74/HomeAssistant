@@ -1,36 +1,37 @@
+
 # Home Assistant IoT Project
 
-This project involves monitoring room humidity and temperature and controlling an LED through a user-friendly GUI interface powered by Home Assistant OS. The system utilizes an ESP microcontroller configured with ESPHome for seamless integration and control.
+This project demonstrates real-time monitoring and control using Home Assistant, an ESP32 microcontroller, and MQTT. 
+The system monitors room temperature and controls an LED, with communication handled through an MQTT broker installed in Home Assistant.
 
-## Overview
+![System Diagram](System.png)  <!-- System image placeholder -->
 
-The project is designed to provide real-time monitoring and control of environmental conditions in a room. It displays current humidity and temperature values and allows for easy control of an LED using the Home Assistant dashboard.
+## System Overview
 
-## Features
+In this setup:
+- **ESP32 Temperature Sensor**: Publishes temperature data to the MQTT topic `/home/bedroom/temperature`. 
+  Home Assistant subscribes to this topic and displays the temperature on a dashboard gauge.
+- **ESP32 LED Control**: Subscribes to the MQTT topic `/home/light/set` to receive commands for turning the LED on or off. 
+  Home Assistant sends these commands when a dashboard button is pressed.
+- **Home Assistant MQTT Broker**: Manages communication between Home Assistant and the ESP32 devices.
 
-- **Humidity and Temperature Monitoring**: Real-time data updates from the ESP microcontroller, displaying current room conditions on the Home Assistant interface.
-- **LED Control**: Ability to turn the LED on and off directly from the Home Assistant GUI.
-- **ESP Microcontroller with ESPHome**: The ESP microcontroller is configured using ESPHome for easy integration with Home Assistant, simplifying the setup and communication process.
+The system uses a custom MQTT component programmed in the Arduino IDE, enabling the ESP32 to communicate with Home Assistant without ESPHome.
 
-## Components Used
+## Installation
 
-- **ESP Microcontroller**: Configured with ESPHome for communication with Home Assistant.
-- **DHT Sensor**: Measures room temperature and humidity.
-- **LED**: Controlled from the Home Assistant interface.
+1. **Set Up MQTT Broker in Home Assistant**:
+   - Install the Mosquitto broker add-on in Home Assistant and start it.
 
-## Configuration and Setup
+2. **Program ESP32 Devices**:
+   - Use the Arduino IDE to program the ESP32s with custom MQTT code.
+   - Configure the temperature sensor ESP32 to publish to `/home/bedroom/temperature`.
+   - Configure the LED ESP32 to listen for messages on `/home/light/set`.
 
-1. **Install Home Assistant OS**: Set up Home Assistant OS on your server or Raspberry Pi.
-2. **ESPHome Configuration**: Configure the ESP microcontroller with ESPHome, specifying the pins for the DHT sensor and the LED.
-3. **Integration**: Add the ESPHome device to Home Assistant and create a dashboard for monitoring and control.
-
-## How It Works
-
-1. **Data Monitoring**: The DHT sensor connected to the ESP microcontroller measures the humidity and temperature. The ESP microcontroller sends this data to Home Assistant, which displays it on the dashboard.
-2. **LED Control**: The LED can be switched on or off using the GUI, with commands sent from Home Assistant to the ESP microcontroller.
+3. **Configure Home Assistant Dashboard**:
+   - Add a gauge to display temperature data and a button to control the LED.
 
 ## Demo
 
-Below is a GIF demonstrating the project in action:
+![System Demo](Demo.gif)  <!-- Demo GIF placeholder -->
 
-![Project Demo](Demo.gif)
+The GIF above demonstrates the system in action, showing real-time temperature updates and LED control via the Home Assistant dashboard.
